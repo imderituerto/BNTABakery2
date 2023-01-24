@@ -1,13 +1,25 @@
 import { useState } from "react";
 
-const CakeForm = () => {
+const CakeForm = ({addNewCake}) => {
 
     const [newCake, setNewCake] = useState("");
     const [newIngredients, setNewIngredients] = useState();
     const [newRating, setNewRating] = useState("");
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const newCakeInput = {
+            cakeName: newCake,
+            ingredients: newIngredients.split(","),
+            rating: newRating
+        };
+
+        addNewCake(newCakeInput);
+    }
+
     return (
-        <form>
+        <form onSubmit={handleSubmit}>
             <label htmlFor="name">Cake Name:</label>
             <input  type="text" 
                     id="name"

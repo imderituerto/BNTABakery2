@@ -33,6 +33,22 @@ function App() {
 
   const [cakes, setCakes] = useState(initialCakes);
 
+  const addNewCake = (newCake) => {
+    const updatedCakes = [...cakes, newCake];
+    setCakes(updatedCakes);
+  }
+
+  const [filteredCakes, setFilteredCakes] = useState();
+
+  const filterCakes = (searchTerm) => {
+    console.log("searchTerm:", searchTerm);
+    const foundCakes = cakes.filter(cake => {
+      return cake.cakeName.toLowerCase().includes(searchTerm.toLowerCase())
+    })
+    setFilteredCakes(foundCakes);
+  }
+
+
 
   return (
     <>
@@ -41,9 +57,9 @@ function App() {
         <Title />
       </header>
       <main>
-        <Search />
-        <CakeForm />
-        <RecipeList cakes={cakes} />
+        <Search filterCakes = {filterCakes}/>
+        <CakeForm addNewCake = {addNewCake}/>
+        <RecipeList cakes = {filteredCakes ? filteredCakes : cakes} />
       </main>
     </>
   );
